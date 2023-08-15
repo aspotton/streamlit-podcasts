@@ -10,9 +10,10 @@ def main():
     st.sidebar.header("Podcast RSS Feeds")
 
     # Dropdown box
-    st.session_state.available_podcast_info = st.session_state.available_podcast_info or create_dict_from_json_files('.')
+    if not 'available_podcast_info' in st.session_state:
+        st.session_state.available_podcast_info = create_dict_from_json_files('.')
     st.session_state.podcast_names = st.session_state.available_podcast_info.keys()
-    
+
     st.sidebar.subheader("Available Podcasts Feeds")
     selected_podcast = st.sidebar.selectbox("Select Podcast", options=st.session_state.podcast_names, key='available_podcasts')
 
