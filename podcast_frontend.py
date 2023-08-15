@@ -19,7 +19,7 @@ def main():
 
     if selected_podcast:
 
-        podcast_info = available_podcast_info[selected_podcast]
+        podcast_info = st.session_state.available_podcast_info[selected_podcast]
 
         # Right section - Newsletter content
         st.header("Newsletter Content")
