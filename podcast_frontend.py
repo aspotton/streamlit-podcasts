@@ -68,6 +68,7 @@ def main():
         podcast_name = podcast_info['podcast_details']['podcast_title']
         # Process the file data as needed
         st.session_state.available_podcast_info[podcast_name] = podcast_info
+        st.available_podcasts = podcast_name
 
 def create_dict_from_json_files(folder_path):
     json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
