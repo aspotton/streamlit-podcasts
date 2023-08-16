@@ -26,6 +26,9 @@ def main():
         # Process the file data as needed
         st.session_state.available_podcast_info[podcast_name] = podcast_info
         st.session_state.podcast_names = list(st.session_state.available_podcast_info)
+
+        if not 'available_podcasts' in st:
+            st.available_podcasts = podcast_name
         st.available_podcasts = podcast_name
 
     # Left section - Input fields
