@@ -70,6 +70,8 @@ def main():
         st.session_state.available_podcast_info[podcast_name] = podcast_info
         st.session_state.podcast_names = list(st.session_state.available_podcast_info)
         st.available_podcasts = podcast_name
+        st.empty()
+        main()
 
 def create_dict_from_json_files(folder_path):
     json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
