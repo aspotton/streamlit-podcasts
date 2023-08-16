@@ -12,7 +12,7 @@ def main():
     # Dropdown box
     if not 'available_podcast_info' in st.session_state:
         st.session_state.available_podcast_info = create_dict_from_json_files('.')
-    st.session_state.podcast_names = st.session_state.available_podcast_info.keys()
+    st.session_state.podcast_names = list(st.session_state.available_podcast_info)
 
     st.sidebar.subheader("Available Podcasts Feeds")
     selected_podcast = st.sidebar.selectbox("Select Podcast", options=st.session_state.podcast_names, key='available_podcasts')
@@ -68,6 +68,7 @@ def main():
         podcast_name = podcast_info['podcast_details']['podcast_title']
         # Process the file data as needed
         st.session_state.available_podcast_info[podcast_name] = podcast_info
+        st.session_state.podcast_names = list(st.session_state.available_podcast_info)
         st.available_podcasts = podcast_name
 
 def create_dict_from_json_files(folder_path):
