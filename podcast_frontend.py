@@ -28,8 +28,8 @@ def main():
         st.session_state.podcast_names = list(st.session_state.available_podcast_info)
 
         if not 'available_podcasts' in st.session_state:
-            st.available_podcasts = podcast_name
-        st.available_podcasts = podcast_name
+            st.session_state.available_podcasts = podcast_name
+        st.session_state.available_podcasts = podcast_name
 
     # Left section - Input fields
     st.sidebar.header("Podcast RSS Feeds")
