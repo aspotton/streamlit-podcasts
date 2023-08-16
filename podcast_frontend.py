@@ -6,14 +6,32 @@ import os
 def main():
     st.title("Newsletter Dashboard")
 
-    # Left section - Input fields
-    st.sidebar.header("Podcast RSS Feeds")
-
-    # Dropdown box
     if not 'available_podcast_info' in st.session_state:
         st.session_state.available_podcast_info = create_dict_from_json_files('.')
     st.session_state.podcast_names = list(st.session_state.available_podcast_info)
 
+    # User Input box
+    st.sidebar.subheader("Add and Process New Podcast Feed")
+    url = st.sidebar.text_input("Link to RSS Feed")
+
+    process_button = st.sidebar.button("Process Podcast Feed")
+    st.sidebar.markdown("**Note**: Podcast processing can take upto 5 mins, please be patient.")
+
+    if process_button:
+
+        # Call the function to process the URLs and retrieve podcast guest information
+        podcast_info = process_podcast_info(url)
+
+        podcast_name = podcast_info['podcast_details']['podcast_title']
+        # Process the file data as needed
+        st.session_state.available_podcast_info[podcast_name] = podcast_info
+        st.session_state.podcast_names = list(st.session_state.available_podcast_info)
+        st.available_podcasts = podcast_name
+
+    # Left section - Input fields
+    st.sidebar.header("Podcast RSS Feeds")
+
+    # Dropdown box
     st.sidebar.subheader("Available Podcasts Feeds")
     selected_podcast = st.sidebar.selectbox("Select Podcast", options=st.session_state.podcast_names, key='available_podcasts')
 
@@ -52,26 +70,6 @@ def main():
         for moment in key_moments.split('\n'):
             st.markdown(
                 f"<p style='margin-bottom: 5px;'>{moment}</p>", unsafe_allow_html=True)
-
-    # User Input box
-    st.sidebar.subheader("Add and Process New Podcast Feed")
-    url = st.sidebar.text_input("Link to RSS Feed")
-
-    process_button = st.sidebar.button("Process Podcast Feed")
-    st.sidebar.markdown("**Note**: Podcast processing can take upto 5 mins, please be patient.")
-
-    if process_button:
-
-        # Call the function to process the URLs and retrieve podcast guest information
-        podcast_info = process_podcast_info(url)
-
-        podcast_name = podcast_info['podcast_details']['podcast_title']
-        # Process the file data as needed
-        st.session_state.available_podcast_info[podcast_name] = podcast_info
-        st.session_state.podcast_names = list(st.session_state.available_podcast_info)
-        st.available_podcasts = podcast_name
-        st.empty()
-        main()
 
 def create_dict_from_json_files(folder_path):
     json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
